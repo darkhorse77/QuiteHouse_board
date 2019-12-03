@@ -1,0 +1,14 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    @using QuiteHouse_board.Model.Context;
+}
+
+<div class="thread-list text-left border border-primary">
+    <p>Список досок:</p>
+    <ul>
+        @foreach(Boards obj in ViewBag.boards)
+        {
+            <li>@obj.Title /@obj.Domain/</li>
+        }
+    </ul>
+</div>
