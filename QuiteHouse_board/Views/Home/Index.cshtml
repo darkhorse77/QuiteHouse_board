@@ -1,14 +1,51 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "/main/";
     @using QuiteHouse_board.Model.Context;
 }
+@* 
+    
+    todo исправить вёрстку 
 
-<div class="thread-list text-left border border-primary">
-    <p>Список досок:</p>
-    <ul>
-        @foreach(Boards obj in ViewBag.boards)
+*@
+    <div class="flex-wrap">
+        <h3 class="text-center"><b>/main/</b> - основная доска</h3>
+        <h4>Список досок</h4>
+        <ul>
+            @foreach (Boards obj in ViewBag.boards)
+            {
+                <li><a href="@obj.Domain/">@obj.Title /@obj.Domain/</a></li>
+            }
+        </ul>
+        <h4>Последние треды</h4>
+        @foreach (Threads th in ViewBag.Threads)
         {
-            <li>@obj.Title /@obj.Domain/</li>
+            Posts mp = th.Posts.Where(x => th.MainPostId == x.Id).First();
+            th.Posts.Remove(mp);
+            <div style="padding-bottom: 20px;">
+                <div class="border-left" style="padding-left: 5px;">
+                    <span><b>№@String.Format("{0:d6}", mp.Id);</b></span>
+                    <span><i>@mp.Author</i></span>
+                    @if (mp.Image != null)
+                    {
+                        <br /><img src="@mp.Image" width="200" /><br />
+                    }
+                    <p>@mp.Message</p>
+                </div>
+
+
+                @foreach (Posts p in th.Posts)
+                {
+            <div style="margin-left: 30px; padding-left: 5px;" class="border-left">
+                <h6><b>№@String.Format("{0:d6}", p.Id);</b></h6>
+                <h6><i>@p.Author</i></h6>
+                @if (p.Image != null)
+                {
+                    <br /><img src="@mp.Image" width="200" /><br />
+                }
+                <p>@p.Message</p>
+            </div>
+                }
+
+            </div>
         }
-    </ul>
-</div>
+    </div>
