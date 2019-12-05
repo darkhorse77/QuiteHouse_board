@@ -13,6 +13,8 @@ namespace QuiteHouse_board.Model.Context
         [Required]
         public int BoardId { get; set; }
         [Required]
+        public Posts MainPost { get; set; }
+
         public int MainPostId { get; set; }
         public List<Posts> Posts { get; set; }
     }
