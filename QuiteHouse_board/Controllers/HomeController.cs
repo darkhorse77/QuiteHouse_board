@@ -14,11 +14,11 @@ namespace QuiteHouse_board.Controllers
 
         public HomeController()
         {
-            
+            LoadBoard();
         }
         public IActionResult Index()
         {
-            LoadBoard();
+            
             ViewBag.Boards = Boards;
             ViewBag.Threads = Threads;
             return View();

@@ -1,0 +1,44 @@
+﻿@using QuiteHouse_board.Model.Context;
+@{
+    ViewData["Title"] = "Index";
+    Posts mp = ViewBag.Thread.MainPost;
+}
+
+<h1>ThreadView</h1>
+@Html.ActionLink("На главную", "Index", "Home")
+<div class="thread">
+    <div class="border-left" style="padding-left: 5px;">
+        <h6>
+            <b>№ @mp.Id</b>
+            <i>@mp.Author</i>
+        </h6>
+        @if (mp.Image != null)
+        {
+            <br /><img src="@mp.Image" width="200" /><br />
+        }
+        <p>@mp.Message</p>
+    </div>
+
+
+    @foreach (Posts p in ViewBag.Thread.Posts)
+    {
+        <div style="margin-left: 30px; padding-left: 5px;" class="border-left">
+            <h6>
+                <b>№ @p.Id</b>
+                <i>@p.Author</i>
+            </h6>
+            @if (p.Image != null)
+            {
+                <br /><img src="@mp.Image" width="200" /><br />
+            }
+            <p>@p.Message</p>
+        </div>
+    }
+
+
+    <form asp-action="ReplyToThread" asp-controller="Home" method="post">
+        <input type="text" name="message" value="" required />
+        <input type="hidden" name="threadId" value="@ViewBag.Thread.Id" />
+        <input type="submit" value="Ответить в тред" />
+    </form>
+</div>

@@ -12,8 +12,9 @@ namespace QuiteHouse_board.Model.Context
         public int Id { get; set; }
         [Required]
         public string Message { get; set; }
+        [Required]
         public string Author { get; set; }
-        
+        [Required]
         public int ThreadId { get; set; }
         public string Image { get; set; }
     }
