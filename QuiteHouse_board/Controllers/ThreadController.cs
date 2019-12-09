@@ -1,34 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using QuiteHouse_board.Model.Context;
-using QuiteHouse_board.Models;
+using QuiteHouse_board.Models.Logic;
 
 namespace QuiteHouse_board.Controllers
 {
     public class ThreadController : Controller
     {
-        Threads thread = new Threads();
-       
-        [Route("/res/{threadId}")]
-        public IActionResult Index(int threadId)
+        private static int threadMPId;
+
+        [Route("/res/{threadMainPostId}")]
+        public IActionResult Index(int threadMainPostId)
         {
-            LoadThread(threadId);
-            ViewBag.Thread = thread;
+            threadMPId = threadMainPostId;
+            ViewBag.Thread = Actions.LoadThread(threadMainPostId);
             return View();
         }
 
-        public void LoadThread(int threadId)
+        [HttpPost]
+        public IActionResult ReplyToThread(string message, int threadId, string image = null)
         {
-            using(ApplicationContext db = new ApplicationContext())
-            {
-                thread = db.Threads.Where(x => x.MainPostId == threadId).FirstOrDefault();
-                thread.MainPost = db.Posts.Where(x => x.Id == thread.MainPostId).FirstOrDefault();
-                thread.Posts = db.Posts.Where(x => x.ThreadId == thread.Id).ToList();                
-            }
+            Actions.ReplyToThread(message, threadId, image);
+            return RedirectToAction("Index", new { threadMainPostId = threadMPId });
         }
     }
 }

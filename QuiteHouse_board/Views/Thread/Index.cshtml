@@ -1,16 +1,17 @@
 ﻿@using QuiteHouse_board.Model.Context;
 @{
-    ViewData["Title"] = "Index";
     Posts mp = ViewBag.Thread.MainPost;
+    ViewData["Title"] = mp.Message;
 }
 
-<h1>ThreadView</h1>
-@Html.ActionLink("На главную", "Index", "Home")
-<div class="thread">
-    <div class="border-left" style="padding-left: 5px;">
+@*@Html.ActionLink("На главную", "Index", "Home")*@
+
+<div class="threadWrap">
+    <div class="message border-left" style="padding-left: 5px;">
         <h6>
             <b>№ @mp.Id</b>
             <i>@mp.Author</i>
+            <span>@mp.Time</span>
         </h6>
         @if (mp.Image != null)
         {
@@ -22,10 +23,11 @@
 
     @foreach (Posts p in ViewBag.Thread.Posts)
     {
-        <div style="margin-left: 30px; padding-left: 5px;" class="border-left">
+        <div style="margin-left: 30px; padding-left: 5px;" class="message border-left">
             <h6>
                 <b>№ @p.Id</b>
                 <i>@p.Author</i>
+                <span>@mp.Time</span>
             </h6>
             @if (p.Image != null)
             {
@@ -36,9 +38,9 @@
     }
 
 
-    <form asp-action="ReplyToThread" asp-controller="Home" method="post">
-        <input type="text" name="message" value="" required />
-        <input type="hidden" name="threadId" value="@ViewBag.Thread.Id" />
-        <input type="submit" value="Ответить в тред" />
-    </form>
-</div>
+<form asp-action="ReplyToThread" asp-controller="Thread" method="post" class="replyForm">
+    <input type="hidden" name="threadId" value="@ViewBag.Thread.Id" />
+    <textarea id="message" name="message" rows="3" required></textarea>
+    <input type="submit" value="Ответить в тред" />
+</form>
+</div>    

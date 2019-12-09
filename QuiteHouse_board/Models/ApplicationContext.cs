@@ -20,5 +20,12 @@ namespace QuiteHouse_board.Model.Context
         {
             optionsBuilder.UseSqlServer(@"Server=.\SQLEXPRESS;Database=ImageBoardDB;Trusted_Connection=True;");
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Posts>()
+                .Property(b => b.Author)
+                .HasDefaultValue("Аноним");
+        }
     }
 }

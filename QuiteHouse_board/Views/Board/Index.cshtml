@@ -1,0 +1,67 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    @using QuiteHouse_board.Model.Context;
+}
+
+<div class="flex-wrap">
+    
+    @*<h4>Список досок</h4>
+        <ul>
+            @foreach (Boards obj in ViewBag.boards)
+            {
+                <li><a href="@obj.Domain/">@obj.Title /@obj.Domain/</a></li>
+            }
+        </ul>*@
+    <br />
+    <label>Создать тред</label>
+    <form asp-action="CreateThread" asp-controller="Board" method="post" class="border">
+        <label>Сообщение треда</label>
+        <input type="text" name="message" value="" required /> <br />
+        <label>Ссылка на фото (необязательно)</label>
+        <input type="text" name="image" value="" />
+        <input type="hidden" name="boardId" value="@ViewBag.Board.Id" />
+        <input type="submit" value="Создать" />
+    </form>
+    <h4>Последние треды</h4>
+    @foreach (Threads th in ViewBag.Board.Threads)
+    {
+        Posts mp = th.MainPost;
+        <div style="padding-bottom: 20px;">
+            <div class="border-left" style="padding-left: 5px;">
+                <h6>
+                    <b>№ @Html.ActionLink(mp.Id.ToString(), "Index", "Thread", new { threadId = mp.Id })</b>
+                    <i>@mp.Author</i>
+                </h6>
+                @if (mp.Image != null)
+                {
+                    <br /><img src="@mp.Image" width="200" /><br />
+                }
+                <p>@mp.Message</p>
+            </div>
+
+
+            @foreach (Posts p in th.Posts)
+            {
+                <div style="margin-left: 30px; padding-left: 5px;" class="border-left">
+                    <h6>
+                        <b>№ @p.Id</b>
+                        <i>@p.Author</i>
+                    </h6>
+                    @if (p.Image != null)
+                    {
+                        <br /><img src="@mp.Image" width="200" /><br />
+                    }
+                    <p>@p.Message</p>
+                </div>
+            }
+
+
+            <form asp-action="ReplyToThread" asp-controller="Board" method="post">
+                <input type="text" name="message" value="" required />
+                <input type="hidden" name="threadId" value="@th.Id" />
+                <input type="submit" value="Ответить в тред" />
+            </form>
+        </div>
+    }
+</div>

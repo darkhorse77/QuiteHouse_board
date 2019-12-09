@@ -17,5 +17,6 @@ namespace QuiteHouse_board.Model.Context
         [Required]
         public int ThreadId { get; set; }
         public string Image { get; set; }
+        public DateTime Time { get; set; }
     }
 }
