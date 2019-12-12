@@ -80,3 +80,10 @@ body {
     color: #000000;
     
 }
+
+.new-year {
+    position: absolute;
+    width: 50px;
+    margin-left: -20px;
+    transform: scale(-1, 1);
+}
