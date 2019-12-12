@@ -16,14 +16,14 @@ namespace QuiteHouse_board.Controllers
         public IActionResult Index(int threadMainPostId)
         {
             threadMPId = threadMainPostId;
-            ViewBag.Thread = Actions.LoadThread(threadMainPostId);
+            ViewBag.Thread = BoardActions.LoadThread(threadMainPostId);
             return View();
         }
 
         [HttpPost]
         public IActionResult ReplyToThread(string message, int threadId, string image = null)
         {
-            Actions.ReplyToThread(message, threadId, image);
+            BoardActions.ReplyToThread(message, threadId, image);
             return RedirectToAction("Index", new { threadMainPostId = threadMPId });
         }
     }

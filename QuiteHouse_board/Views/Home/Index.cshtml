@@ -1,13 +1,30 @@
 ﻿
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Тихий дом";
 }
 
-<h1>Index</h1>
+    <article class="postcontainer main-description">
+        Тихий дом - это система форумов, где можно общаться быстро и свободно, где любая точка зрения имеет право на жизнь. 
+        Здесь нет регистрации и подписываться не нужно, хотя это не избавляет вас от необходимости соблюдать правила. 
+        Все форумы (кроме /b/), а их список находится снизу, имеют собственную чётко ограниченную тематику. 
+        Словом, всё, что не запрещено правилами отдельно взятого форума и относится к его тематике, на этом форуме разрешено.
+    </article>
 
-@foreach (var item in ViewBag.BoardsList)
-{
-    @Html.ActionLink((string)item.Title, "Index", "Board", new { boardDomain = item.Domain });
-    <br />  
-}
+    <article class="postcontainer board-list">
+        <b>Список досок</b>
+        @foreach (var item in ViewBag.BoardsList)
+        {
+            <br />
+            @Html.ActionLink($"{(string)item.Title} /{(string)item.Domain}/", "Index", "Board", new { boardDomain = item.Domain });
+
+        }
+
+    </article>
+
+    <article class="postcontainer last-threads">
+        <b>Интересные треды</b>
+        <br />
+        На этой борде интересных тредов нет.
+    </article>
+
 

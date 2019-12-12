@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace QuiteHouse_board.Models.Logic
 {
-    public static class Actions
+    public static class BoardActions
     {
         public static List<Boards> LoadBoardsList()
         {
@@ -94,6 +94,8 @@ namespace QuiteHouse_board.Models.Logic
                     Author = author,
                     Time = DateTime.Now
                 };
+                Threads thread = db.Threads.Where(x => x.Id == threadId).FirstOrDefault();
+                thread.lastBump = DateTime.Now;
                 db.Posts.Add(post);
                 db.SaveChanges();
             }

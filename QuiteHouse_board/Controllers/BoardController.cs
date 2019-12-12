@@ -13,20 +13,22 @@ namespace QuiteHouse_board.Controllers
         public IActionResult Index(string boardDomain)
         {
             domain = boardDomain;
-            ViewBag.Board = Actions.LoadBoard(boardDomain);
+            Boards board = BoardActions.LoadBoard(boardDomain);
+            board.Threads = board.Threads.OrderByDescending(x => x.lastBump).ToList();
+            ViewBag.Board = board;
             return View();
         }
 
         public IActionResult CreateThread(string message, int boardId, string image = null)
         {
-            Actions.CreateThread(message, boardId, image);
+            BoardActions.CreateThread(message, boardId, image);
             return RedirectToAction("Index", new { boardDomain = domain});
         }
 
         [HttpPost]
         public IActionResult ReplyToThread(string message, int threadId, string image = null)
         {
-            Actions.ReplyToThread(message, threadId, image);
+            BoardActions.ReplyToThread(message, threadId, image);
             return RedirectToAction("Index", new { boardDomain = domain });
         }
     }

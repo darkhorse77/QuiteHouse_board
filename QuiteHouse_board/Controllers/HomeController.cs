@@ -7,7 +7,7 @@ namespace QuiteHouse_board.Controllers
     {
         public IActionResult Index()
         {
-            ViewBag.BoardsList = Actions.LoadBoardsList();
+            ViewBag.BoardsList = BoardActions.LoadBoardsList();
             return View();
         }
     }
